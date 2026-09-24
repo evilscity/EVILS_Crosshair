@@ -504,6 +504,210 @@
   filter:drop-shadow(0 0 8px rgba(90,169,255,.4));
 }
 
+    .toolbar-actions{
+      display:flex;
+      gap:8px;
+    }
+
+    .btn svg{
+      width:17px;
+      height:17px;
+      display:inline-block;
+      vertical-align:-3px;
+      margin-right:6px;
+    }
+
+    .btn.upload{
+      background:linear-gradient(135deg, rgba(123,97,255,.18), rgba(90,169,255,.14));
+    }
+
+    .upload-modal{
+      position:fixed;
+      inset:0;
+      z-index:400;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(3,8,18,.66);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .upload-modal.show{
+      display:flex;
+    }
+
+    .upload-card{
+      width:min(460px,100%);
+      border:1px solid var(--border-strong);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(18,32,58,.98), rgba(10,20,38,.98));
+      box-shadow:0 30px 80px rgba(0,0,0,.5);
+      overflow:hidden;
+    }
+
+    .upload-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .upload-head h3{
+      margin:0;
+      font-size:17px;
+    }
+
+    .upload-close{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(17,30,50,.95);
+      color:var(--text);
+      font-size:20px;
+      line-height:1;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .upload-close:hover{
+      border-color:var(--border-strong);
+      background:#1a2c4c;
+    }
+
+    .upload-body{
+      padding:18px;
+    }
+
+    .upload-body [hidden]{display:none !important}
+
+    .dropzone{
+      border:2px dashed rgba(126,173,255,.35);
+      border-radius:18px;
+      padding:30px 18px;
+      text-align:center;
+      cursor:pointer;
+      transition:.16s ease;
+      background:rgba(12,24,43,.5);
+    }
+
+    .dropzone:hover,.dropzone.drag{
+      border-color:var(--accent);
+      background:rgba(90,169,255,.06);
+    }
+
+    .dropzone svg{
+      width:38px;
+      height:38px;
+      color:var(--accent);
+      margin-bottom:10px;
+    }
+
+    .dropzone p{
+      margin:4px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .dropzone .hint{
+      margin:10px 0;
+      font-size:12px;
+    }
+
+    .upload-preview{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background:rgba(12,24,43,.5);
+    }
+
+    .upload-preview img{
+      width:64px;
+      height:64px;
+      object-fit:contain;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(228,218,197,.88), rgba(193,181,160,.92));
+      padding:6px;
+    }
+
+    .upload-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .upload-info .fname{
+      font-weight:700;
+      font-size:14px;
+      word-break:break-all;
+    }
+
+    .upload-info .fsize{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .upload-remove{
+      border:1px solid var(--border);
+      background:rgba(17,30,50,.95);
+      color:var(--text);
+      border-radius:10px;
+      padding:8px 12px;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .upload-remove:hover{
+      border-color:var(--border-strong);
+    }
+
+    .upload-error{
+      display:none;
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:700;
+      color:#ff9db0;
+      background:rgba(239,68,68,.1);
+      border:1px solid rgba(239,68,68,.3);
+    }
+
+    .upload-error.show{display:block}
+
+    .upload-error.success{
+      color:#7cf0b0;
+      background:rgba(34,197,94,.1);
+      border-color:rgba(34,197,94,.3);
+    }
+
+    .upload-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .upload-actions .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .upload-note{
+      margin-top:14px;
+      font-size:12px;
+      color:#7d8fb5;
+      line-height:1.6;
+    }
+
   </style>
 </head>
 <body>
@@ -530,7 +734,17 @@
             <option value="name-desc">Tên Z → A</option>
             <option value="folder">Theo thư mục</option>
           </select>
-          <button id="resetBtn" class="btn primary">Đặt lại</button>
+          <div class="toolbar-actions">
+            <button id="resetBtn" class="btn primary">Đặt lại</button>
+            <button id="uploadBtn" class="btn upload">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 16V5"></path>
+                <path d="M7 9l5-5 5 5"></path>
+                <path d="M5 20h14"></path>
+              </svg>
+              Tải lên tâm ngắm
+            </button>
+          </div>
         </div>
       </div>
 
@@ -581,6 +795,44 @@
     </div>
   </div>
 
+  <div class="upload-modal" id="uploadModal">
+    <div class="upload-card">
+      <div class="upload-head">
+        <h3>Đóng góp tâm ngắm</h3>
+        <button class="upload-close" id="uploadClose" type="button" aria-label="Đóng">×</button>
+      </div>
+      <div class="upload-body">
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 16V5"></path>
+            <path d="M7 9l5-5 5 5"></path>
+            <path d="M5 20h14"></path>
+          </svg>
+          <p>Kéo thả ảnh PNG vào đây</p>
+          <p class="hint">hoặc</p>
+          <button class="btn primary" id="browseBtn" type="button">Chọn ảnh từ máy</button>
+          <input type="file" id="fileInput" accept="image/png,.png" hidden>
+        </div>
+        <div class="upload-preview" id="uploadPreview" hidden>
+          <img id="uploadPreviewImg" alt="Xem trước">
+          <div class="upload-info">
+            <div class="fname" id="uploadFileName"></div>
+            <div class="fsize" id="uploadFileSize"></div>
+          </div>
+          <button class="upload-remove" id="uploadRemove" type="button">Đổi ảnh</button>
+        </div>
+        <div class="upload-error" id="uploadError"></div>
+        <div class="upload-actions">
+          <button class="btn" id="uploadCancel" type="button">Hủy</button>
+          <button class="btn primary" id="uploadSubmit" type="button" disabled>Gửi duyệt</button>
+        </div>
+        <div class="upload-note">
+          Chỉ chấp nhận file ảnh <b>.png</b>, dung lượng tối đa <b>2MB</b>. Sau khi bạn gửi, tâm ngắm sẽ được admin duyệt trước khi hiển thị trên trang.
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const GITHUB_CONFIG = {
       owner: "evilscity",
@@ -588,6 +840,14 @@
       branch: "main",
       folders: ["EVILS_Crosshair"],
       prettifyNames: true
+    };
+
+    // CẤU HÌNH TẢI LÊN: dán webhook Discord của kênh duyệt tâm ngắm vào đây.
+    // Tạo webhook tại: Discord > Kênh duyệt > Cài đặt kênh > Tích hợp > Webhooks > New Webhook.
+    const UPLOAD_CONFIG = {
+      webhookUrl: "https://discord.com/api/webhooks/ID/TOKEN",
+      maxSize: 2 * 1024 * 1024,
+      acceptedTypes: ["image/png"]
     };
 
     const COLOR_RULES = [
@@ -1005,6 +1265,174 @@
     });
 
     document.addEventListener("mouseleave", hidePreview);
+
+    // ===== Tải lên tâm ngắm =====
+    const uploadModal = document.getElementById("uploadModal");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const uploadClose = document.getElementById("uploadClose");
+    const uploadCancel = document.getElementById("uploadCancel");
+    const uploadSubmit = document.getElementById("uploadSubmit");
+    const dropzone = document.getElementById("dropzone");
+    const browseBtn = document.getElementById("browseBtn");
+    const fileInput = document.getElementById("fileInput");
+    const uploadPreview = document.getElementById("uploadPreview");
+    const uploadPreviewImg = document.getElementById("uploadPreviewImg");
+    const uploadFileName = document.getElementById("uploadFileName");
+    const uploadFileSize = document.getElementById("uploadFileSize");
+    const uploadRemove = document.getElementById("uploadRemove");
+    const uploadError = document.getElementById("uploadError");
+
+    let selectedFile = null;
+
+    function openUploadModal() {
+      uploadModal.classList.add("show");
+      resetUpload();
+    }
+
+    function closeUploadModal() {
+      uploadModal.classList.remove("show");
+    }
+
+    function showUploadError(msg) {
+      uploadError.textContent = msg;
+      uploadError.classList.remove("success");
+      uploadError.classList.add("show");
+    }
+
+    function clearUploadError() {
+      uploadError.textContent = "";
+      uploadError.classList.remove("show", "success");
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+    function resetUpload() {
+      selectedFile = null;
+      fileInput.value = "";
+      dropzone.hidden = false;
+      uploadPreview.hidden = true;
+      uploadSubmit.disabled = true;
+      uploadSubmit.textContent = "Gửi duyệt";
+      clearUploadError();
+    }
+
+    function handleFile(file) {
+      clearUploadError();
+      if (!file) return;
+
+      const isPng = file.type === "image/png" || /\.png$/i.test(file.name);
+      if (!isPng) {
+        showUploadError("Chỉ chấp nhận file ảnh .png. Vui lòng chọn file khác.");
+        return;
+      }
+
+      if (file.size > UPLOAD_CONFIG.maxSize) {
+        showUploadError("File vượt quá dung lượng tối đa 2MB. Vui lòng chọn file nhỏ hơn.");
+        return;
+      }
+
+      selectedFile = file;
+      uploadFileName.textContent = file.name;
+      uploadFileSize.textContent = formatSize(file.size) + " • PNG";
+      uploadPreviewImg.src = URL.createObjectURL(file);
+      dropzone.hidden = true;
+      uploadPreview.hidden = false;
+      uploadSubmit.disabled = false;
+    }
+
+    async function submitUpload() {
+      if (!selectedFile) return;
+
+      if (!UPLOAD_CONFIG.webhookUrl || UPLOAD_CONFIG.webhookUrl.includes("ID/TOKEN")) {
+        showUploadError("Chưa cấu hình webhook Discord. Vui lòng liên hệ admin.");
+        return;
+      }
+
+      uploadSubmit.disabled = true;
+      uploadSubmit.textContent = "Đang gửi...";
+      clearUploadError();
+
+      try {
+        const form = new FormData();
+        form.append("content", "📤 **Yêu cầu tải lên tâm ngắm mới**\nFile: `" + selectedFile.name + "`\n⏳ Chờ admin duyệt.");
+        form.append("file", selectedFile, selectedFile.name);
+
+        const res = await fetch(UPLOAD_CONFIG.webhookUrl, {
+          method: "POST",
+          body: form
+        });
+
+        if (!res.ok) {
+          throw new Error("Gửi thất bại (mã " + res.status + ")");
+        }
+
+        uploadError.textContent = "Đã gửi yêu cầu tải lên thành công! Tâm ngắm sẽ hiển thị sau khi admin duyệt.";
+        uploadError.classList.add("show", "success");
+        uploadSubmit.textContent = "Đã gửi";
+        setTimeout(() => {
+          closeUploadModal();
+          resetUpload();
+        }, 2500);
+      } catch (err) {
+        console.error(err);
+        showUploadError("Không gửi được: " + err.message + ". Vui lòng thử lại.");
+        uploadSubmit.disabled = false;
+        uploadSubmit.textContent = "Gửi duyệt";
+      }
+    }
+
+    uploadBtn.addEventListener("click", openUploadModal);
+    uploadClose.addEventListener("click", closeUploadModal);
+    uploadCancel.addEventListener("click", closeUploadModal);
+    uploadModal.addEventListener("click", (e) => {
+      if (e.target === uploadModal) closeUploadModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && uploadModal.classList.contains("show")) closeUploadModal();
+    });
+
+    browseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      handleFile(fileInput.files[0]);
+    });
+
+    dropzone.addEventListener("click", (e) => {
+      if (e.target === browseBtn || browseBtn.contains(e.target)) return;
+      fileInput.click();
+    });
+
+    ["dragenter", "dragover"].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        dropzone.classList.add("drag");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("drag");
+      });
+    });
+
+    dropzone.addEventListener("drop", (e) => {
+      const files = e.dataTransfer.files;
+      if (files && files.length) handleFile(files[0]);
+    });
+
+    uploadRemove.addEventListener("click", () => {
+      resetUpload();
+    });
+
+    uploadSubmit.addEventListener("click", submitUpload);
 
     init();
   </script>
