@@ -1093,7 +1093,7 @@
           <select id="sortSelect" class="select">
             <option value="name-asc">Tên A → Z</option>
             <option value="name-desc">Tên Z → A</option>
-            <option value="folder">Theo thư mục</option>
+            <option value="folder">Theo danh mục</option>
           </select>
           <div class="toolbar-actions">
             <button id="resetBtn" class="btn primary">Đặt lại</button>
@@ -1611,7 +1611,7 @@
       });
 
       if (!response.ok) {
-        throw new Error(`Không đọc được folder "${folder}" (${response.status}). Kiểm tra owner, repo, branch hoặc tên thư mục.`);
+        throw new Error(`Không đọc được folder "${folder}" (${response.status}). Kiểm tra owner, repo, branch hoặc tên danh mục.`);
       }
 
       const data = await response.json();
