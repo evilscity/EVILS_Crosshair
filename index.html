@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>EVILS Crosshair</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
@@ -36,6 +36,8 @@
         radial-gradient(circle at top right, rgba(111,82,255,.12), transparent 18%),
         linear-gradient(180deg,#060e1a 0%, #081324 40%, #07111f 100%);
       min-height:100vh;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
     }
 
     .shell{
@@ -115,6 +117,7 @@
       color:var(--text);
       outline:none;
       font-size:14px;
+      font-family:inherit;
     }
 
     .field,.select{
@@ -131,6 +134,14 @@
       cursor:pointer;
       font-weight:700;
       transition:.18s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+    }
+
+    .btn:active{
+      transform:scale(.97);
     }
 
     .btn:hover{
@@ -181,6 +192,8 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      font-family:inherit;
+      font-size:13px;
     }
 
     .chip:hover,.chip.active{
@@ -190,12 +203,17 @@
       box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
     }
 
+    .chip:active{
+      transform:scale(.96);
+    }
+
     .chip-dot{
       width:10px;
       height:10px;
       border-radius:999px;
       display:inline-block;
       border:1px solid rgba(255,255,255,.18);
+      flex-shrink:0;
     }
 
     .stats{
@@ -231,6 +249,10 @@
       transform:translateY(-4px);
       border-color:var(--border-strong);
       box-shadow:0 22px 50px rgba(0,0,0,.32);
+    }
+
+    .card:active{
+      transform:scale(.98);
     }
 
     .card::before{
@@ -496,7 +518,8 @@
       height:17px;
       display:inline-block;
       vertical-align:-3px;
-      margin-right:6px;
+      margin-right:0;
+      flex-shrink:0;
     }
 
     .btn.upload{
@@ -527,6 +550,9 @@
       background:linear-gradient(180deg, rgba(18,32,58,.98), rgba(10,20,38,.98));
       box-shadow:0 30px 80px rgba(0,0,0,.5);
       overflow:hidden;
+      max-height:90vh;
+      display:flex;
+      flex-direction:column;
     }
 
     .upload-head{
@@ -535,6 +561,7 @@
       justify-content:space-between;
       padding:16px 18px;
       border-bottom:1px solid rgba(255,255,255,.06);
+      flex-shrink:0;
     }
 
     .upload-head h3{
@@ -562,6 +589,8 @@
 
     .upload-body{
       padding:18px;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
     }
 
     .upload-body [hidden]{display:none !important}
@@ -616,6 +645,7 @@
       border-radius:10px;
       background:linear-gradient(180deg, rgba(228,218,197,.88), rgba(193,181,160,.92));
       padding:6px;
+      flex-shrink:0;
     }
 
     .upload-info{
@@ -644,6 +674,7 @@
       cursor:pointer;
       font-size:12px;
       font-weight:700;
+      flex-shrink:0;
     }
 
     .upload-remove:hover{
@@ -690,6 +721,171 @@
       line-height:1.6;
     }
 
+    /* ===== MOBILE FILTER PANEL ===== */
+    .mobile-filter-toggle {
+      display: none;
+    }
+
+    .mobile-filter-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 350;
+      background: rgba(3,8,18,.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: flex-end;
+    }
+
+    .mobile-filter-panel.show {
+      display: flex;
+    }
+
+    .mobile-filter-sheet {
+      width: 100%;
+      max-height: 85vh;
+      background: linear-gradient(180deg, rgba(18,32,58,.99), rgba(10,20,38,.99));
+      border: 1px solid var(--border-strong);
+      border-bottom: none;
+      border-radius: 24px 24px 0 0;
+      display: flex;
+      flex-direction: column;
+      animation: sheetUp .28s cubic-bezier(.2,.8,.2,1);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @keyframes sheetUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .mobile-filter-handle {
+      width: 44px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      margin: 10px auto 0;
+      flex-shrink: 0;
+    }
+
+    .mobile-filter-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      flex-shrink: 0;
+    }
+
+    .mobile-filter-head h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .mobile-filter-head-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mobile-filter-reset {
+      border: 1px solid var(--border);
+      background: rgba(17,30,50,.95);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+    }
+
+    .mobile-filter-reset:hover {
+      border-color: var(--border-strong);
+    }
+
+    .mobile-filter-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(17,30,50,.95);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .mobile-filter-body {
+      padding: 16px 20px 24px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+    }
+
+    .mobile-filter-body .filter-group {
+      margin-top: 18px;
+    }
+
+    .mobile-filter-body .filter-group:first-child {
+      margin-top: 0;
+    }
+
+    .mobile-filter-body .filter-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      color: #b7c6e4;
+      margin-bottom: 10px;
+    }
+
+    .mobile-filter-body .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mobile-filter-body .chip {
+      height: 36px;
+      padding: 0 14px;
+      font-size: 13px;
+    }
+
+    .mobile-filter-body .select {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(17,30,50,.95);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      font-family: inherit;
+      margin-bottom: 8px;
+    }
+
+    .mobile-filter-body .select:last-child {
+      margin-bottom: 0;
+    }
+
+    .mobile-filter-apply {
+      padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(8,17,31,.6);
+      flex-shrink: 0;
+    }
+
+    .mobile-filter-apply .btn {
+      width: 100%;
+      height: 48px;
+      font-size: 15px;
+      border-radius: 14px;
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1100px){
       .preview{display:none}
@@ -697,169 +893,180 @@
 
     @media (max-width: 980px){
       .toolbar{grid-template-columns:1fr 1fr}
-      .toolbar-actions{grid-column:1 / -1}
     }
 
     @media (max-width: 768px){
       .shell{
-        width:min(100% - 16px,1440px);
-        padding:8px 0 36px;
+        width: calc(100% - 20px);
+        padding: 8px 0 40px;
       }
 
       .topbar{
-        top:8px;
-        border-radius:18px;
-        max-height:78vh;
-        display:flex;
-        flex-direction:column;
+        top: 6px;
+        border-radius: 18px;
       }
 
       .topbar-main{
-        padding:12px 14px;
-        gap:10px;
-        flex-direction:column;
-        align-items:stretch;
-        flex-shrink:0;
+        padding: 12px 14px;
+        gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .brand{
-        min-width:auto;
-        gap:10px;
+        min-width: auto;
+        gap: 10px;
       }
 
       .logo-img{
-        width:44px;
-        height:44px;
+        width: 42px;
+        height: 42px;
       }
 
       .brand h1{
-        font-size:17px;
+        font-size: 17px;
       }
 
+      /* Ẩn mô tả dài trên mobile */
       .brand p{
-        display:none;
+        display: none;
       }
 
+      /* Toolbar mobile: gọn gàng, đầy đủ chức năng chính */
       .toolbar{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:8px;
-        min-width:auto;
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 8px;
+        min-width: auto;
       }
 
       .toolbar .field{
-        grid-column:1 / -1;
-        height:42px;
+        grid-column: 1 / -1;
+        height: 44px;
+        font-size: 14px;
       }
 
+      /* Ẩn select trên mobile, đưa vào panel bộ lọc */
       .toolbar .select{
-        height:42px;
-        font-size:13px;
+        display: none;
       }
 
       .toolbar-actions{
-        grid-column:1 / -1;
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:8px;
+        display: contents;
       }
 
-      .toolbar-actions .btn{
-        height:42px;
-        font-size:13px;
-        padding:0 12px;
+      /* Nút bộ lọc hiện trên mobile */
+      .mobile-filter-toggle {
+        display: inline-flex;
+        height: 44px;
+        padding: 0 14px;
+        font-size: 13px;
       }
 
+      #uploadBtn {
+        height: 44px;
+        padding: 0 14px;
+        font-size: 13px;
+      }
+
+      #uploadBtn span.upload-text {
+        display: none;
+      }
+
+      #uploadBtn {
+        min-width: 44px;
+      }
+
+      /* Ẩn nút Đặt lại trên mobile (đã có trong panel) */
+      #resetBtn {
+        display: none;
+      }
+
+      /* Ẩn filters-wrap trên mobile (đã có trong panel) */
       .filters-wrap{
-        padding:0 14px 14px;
-        overflow-y:auto;
-        -webkit-overflow-scrolling:touch;
-        flex:1;
-      }
-
-      .filter-group{
-        margin-top:12px;
-      }
-
-      .chip{
-        height:32px;
-        padding:0 11px;
-        font-size:12px;
-      }
-
-      .chip-dot{
-        width:9px;
-        height:9px;
+        display: none;
       }
 
       .grid{
-        grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
-        gap:12px;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
       }
 
       .name{
-        font-size:15px;
-        margin:6px 0;
+        font-size: 15px;
+        margin: 6px 0;
       }
 
       .sub{
-        font-size:11px;
+        font-size: 11px;
       }
 
       .thumb-wrap{
-        padding:12px 12px 6px;
+        padding: 12px 12px 6px;
       }
 
       .meta{
-        padding:0 10px 12px;
+        padding: 0 10px 12px;
       }
 
       .stats{
-        margin:14px 4px 10px;
-        font-size:13px;
-      }
-    }
-
-    @media (max-width: 480px){
-      .brand h1{
-        font-size:16px;
-      }
-
-      .grid{
-        grid-template-columns:repeat(2, 1fr);
-        gap:10px;
+        margin: 12px 4px 10px;
+        font-size: 13px;
       }
 
       .card-top{
-        top:8px;
-        left:8px;
-        right:8px;
+        top: 8px;
+        left: 8px;
+        right: 8px;
       }
 
       .tag-mini{
-        padding:4px 8px;
-        font-size:10px;
+        padding: 5px 9px;
+        font-size: 10px;
       }
 
       .download-btn{
-        width:30px;
-        height:30px;
-        border-radius:10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
       }
 
       .download-btn svg{
-        width:14px;
-        height:14px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    @media (max-width: 420px){
+      .grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
       }
 
       .name{
-        font-size:14px;
+        font-size: 14px;
       }
 
-      .toolbar .select,
-      .toolbar-actions .btn{
-        height:40px;
-        font-size:12px;
+      .tag-mini{
+        padding: 4px 7px;
+        font-size: 9px;
+      }
+
+      .download-btn{
+        width: 28px;
+        height: 28px;
+      }
+
+      .download-btn svg{
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    /* iPhone notch / safe area */
+    @supports (padding: max(0px)) {
+      .topbar {
+        padding-top: max(0px, env(safe-area-inset-top));
       }
     }
   </style>
@@ -869,7 +1076,7 @@
     <div class="topbar">
       <div class="topbar-main">
         <div class="brand">
-          <img src="assets/logo.png" class="logo-img">
+          <img src="assets/logo.png" class="logo-img" alt="EVILS">
           <div>
             <h1>EVILS Crosshair</h1>
             <p>Thư viện tâm ngắm ảo miễn phí độc quyền tại EVILS CITY - GTA5RP.VN</p>
@@ -890,13 +1097,19 @@
           </select>
           <div class="toolbar-actions">
             <button id="resetBtn" class="btn primary">Đặt lại</button>
-            <button id="uploadBtn" class="btn upload">
+            <button id="mobileFilterBtn" class="btn primary mobile-filter-toggle" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"></polygon>
+              </svg>
+              Bộ lọc
+            </button>
+            <button id="uploadBtn" class="btn upload" type="button">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 16V5"></path>
                 <path d="M7 9l5-5 5 5"></path>
                 <path d="M5 20h14"></path>
               </svg>
-              Tải lên tâm ngắm
+              <span class="upload-text">Tải lên tâm ngắm</span>
             </button>
           </div>
         </div>
@@ -949,6 +1162,55 @@
     </div>
   </div>
 
+  <!-- Mobile Filter Panel -->
+  <div class="mobile-filter-panel" id="mobileFilterPanel">
+    <div class="mobile-filter-sheet">
+      <div class="mobile-filter-handle"></div>
+      <div class="mobile-filter-head">
+        <h3>Bộ lọc & Sắp xếp</h3>
+        <div class="mobile-filter-head-actions">
+          <button class="mobile-filter-reset" id="mobileResetBtn" type="button">Đặt lại</button>
+          <button class="mobile-filter-close" id="mobileFilterClose" type="button" aria-label="Đóng">×</button>
+        </div>
+      </div>
+      <div class="mobile-filter-body">
+        <div class="filter-group">
+          <div class="filter-title">Danh mục</div>
+          <select id="mobileFolderSelect" class="select">
+            <option value="all">Tất cả tâm ngắm</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Sắp xếp</div>
+          <select id="mobileSortSelect" class="select">
+            <option value="name-asc">Tên A → Z</option>
+            <option value="name-desc">Tên Z → A</option>
+            <option value="folder">Theo thư mục</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Thư mục</div>
+          <div class="filters" id="mobileFolderChips"></div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Màu sắc</div>
+          <div class="filters" id="mobileColorChips"></div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-title">Kiểu dáng</div>
+          <div class="filters" id="mobileShapeChips"></div>
+        </div>
+      </div>
+      <div class="mobile-filter-apply">
+        <button class="btn primary" id="mobileApplyBtn" type="button">Xem kết quả</button>
+      </div>
+    </div>
+  </div>
+
   <div class="upload-modal" id="uploadModal">
     <div class="upload-card">
       <div class="upload-head">
@@ -996,8 +1258,6 @@
       prettifyNames: true
     };
 
-    // CẤU HÌNH TẢI LÊN: dán webhook Discord của kênh duyệt tâm ngắm vào đây.
-    // Tạo webhook tại: Discord > Kênh duyệt > Cài đặt kênh > Tích hợp > Webhooks > New Webhook.
     const UPLOAD_CONFIG = {
       webhookUrl: "https://discord.com/api/webhooks/1552595762645307432/EZ8G2xd2vOT33AWlabUHn05ztEZOYjCvyX8SRSNVO_hL9-hSmxn3iHVMxZJtYs9rRa2E",
       maxSize: 2 * 1024 * 1024,
@@ -1587,6 +1847,129 @@
     });
 
     uploadSubmit.addEventListener("click", submitUpload);
+
+    // ===== MOBILE FILTER PANEL =====
+    const mobileFilterBtn = document.getElementById("mobileFilterBtn");
+    const mobileFilterPanel = document.getElementById("mobileFilterPanel");
+    const mobileFilterClose = document.getElementById("mobileFilterClose");
+    const mobileResetBtn = document.getElementById("mobileResetBtn");
+    const mobileApplyBtn = document.getElementById("mobileApplyBtn");
+    const mobileFolderSelect = document.getElementById("mobileFolderSelect");
+    const mobileSortSelect = document.getElementById("mobileSortSelect");
+    const mobileFolderChips = document.getElementById("mobileFolderChips");
+    const mobileColorChips = document.getElementById("mobileColorChips");
+    const mobileShapeChips = document.getElementById("mobileShapeChips");
+
+    function renderMobileFilters() {
+      // Sync select options
+      mobileFolderSelect.innerHTML = folderSelect.innerHTML;
+      mobileFolderSelect.value = activeFolder;
+
+      mobileSortSelect.value = sortSelect.value;
+
+      // Folder chips
+      mobileFolderChips.innerHTML = "";
+      const folders = uniqueFolders(allItems);
+
+      mobileFolderChips.appendChild(createChip("Tất cả", "all", activeFolder, (value) => {
+        activeFolder = value;
+        folderSelect.value = value;
+        mobileFolderSelect.value = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      folders.forEach(folder => {
+        mobileFolderChips.appendChild(createChip(folder, folder, activeFolder, (value) => {
+          activeFolder = value;
+          folderSelect.value = value;
+          mobileFolderSelect.value = value;
+          renderAll();
+          renderMobileFilters();
+        }));
+      });
+
+      // Color chips
+      mobileColorChips.innerHTML = "";
+      mobileColorChips.appendChild(createChip("Tất cả", "all", activeColor, (value) => {
+        activeColor = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      COLOR_RULES.forEach(rule => {
+        mobileColorChips.appendChild(createChip(rule.label, rule.key, activeColor, (value) => {
+          activeColor = value;
+          renderAll();
+          renderMobileFilters();
+        }, rule.swatch));
+      });
+
+      // Shape chips
+      mobileShapeChips.innerHTML = "";
+      mobileShapeChips.appendChild(createChip("Tất cả", "all", activeShape, (value) => {
+        activeShape = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      SHAPE_RULES.forEach(rule => {
+        mobileShapeChips.appendChild(createChip(rule.label, rule.key, activeShape, (value) => {
+          activeShape = value;
+          renderAll();
+          renderMobileFilters();
+        }));
+      });
+    }
+
+    function openMobileFilterPanel() {
+      renderMobileFilters();
+      mobileFilterPanel.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileFilterPanel() {
+      mobileFilterPanel.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    mobileFilterBtn.addEventListener("click", openMobileFilterPanel);
+    mobileFilterClose.addEventListener("click", closeMobileFilterPanel);
+    mobileApplyBtn.addEventListener("click", closeMobileFilterPanel);
+
+    mobileFilterPanel.addEventListener("click", (e) => {
+      if (e.target === mobileFilterPanel) closeMobileFilterPanel();
+    });
+
+    mobileResetBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      folderSelect.value = "all";
+      sortSelect.value = "name-asc";
+      activeFolder = "all";
+      activeColor = "all";
+      activeShape = "all";
+      renderAll();
+      renderMobileFilters();
+    });
+
+    mobileFolderSelect.addEventListener("change", () => {
+      activeFolder = mobileFolderSelect.value;
+      folderSelect.value = mobileFolderSelect.value;
+      renderAll();
+      renderMobileFilters();
+    });
+
+    mobileSortSelect.addEventListener("change", () => {
+      sortSelect.value = mobileSortSelect.value;
+      renderAll();
+    });
+
+    // Đóng panel khi resize lên desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768 && mobileFilterPanel.classList.contains("show")) {
+        closeMobileFilterPanel();
+      }
+    });
 
     init();
   </script>
