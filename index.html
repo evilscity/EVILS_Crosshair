@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>EVILS Crosshair</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <style>
@@ -932,10 +932,13 @@
         display: none;
       }
 
-      /* Toolbar mobile: gọn gàng, đầy đủ chức năng chính */
+      /* Toolbar mobile: 2 hàng
+         Hàng 1: ô tìm kiếm full width
+         Hàng 2: nút Bộ lọc + nút Đóng góp (2 cột bằng nhau)
+      */
       .toolbar{
         display: grid;
-        grid-template-columns: 1fr auto auto;
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
         min-width: auto;
       }
@@ -946,40 +949,46 @@
         font-size: 14px;
       }
 
-      /* Ẩn select trên mobile, đưa vào panel bộ lọc */
+      /* Ẩn select desktop trên mobile, đưa vào panel bộ lọc */
       .toolbar .select{
         display: none;
       }
 
       .toolbar-actions{
-        display: contents;
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        width: 100%;
       }
 
-      /* Nút bộ lọc hiện trên mobile */
-      .mobile-filter-toggle {
-        display: inline-flex;
-        height: 44px;
-        padding: 0 14px;
-        font-size: 13px;
-      }
-
-      #uploadBtn {
-        height: 44px;
-        padding: 0 14px;
-        font-size: 13px;
-      }
-
-      #uploadBtn span.upload-text {
-        display: none;
-      }
-
-      #uploadBtn {
-        min-width: 44px;
-      }
-
-      /* Ẩn nút Đặt lại trên mobile (đã có trong panel) */
+      /* Ẩn nút Đặt lại desktop trên mobile */
       #resetBtn {
         display: none;
+      }
+
+      /* Nút Bộ lọc */
+      .mobile-filter-toggle {
+        display: inline-flex !important;
+        height: 44px;
+        padding: 0 12px;
+        font-size: 14px;
+        width: 100%;
+        white-space: nowrap;
+      }
+
+      /* Nút Đóng góp: full width, hiển thị icon + text ngắn */
+      #uploadBtn {
+        height: 44px;
+        padding: 0 12px;
+        font-size: 14px;
+        width: 100%;
+        white-space: nowrap;
+      }
+
+      /* Ẩn text dài, chỉ hiện text ngắn trên mobile */
+      #uploadBtn .upload-text {
+        font-size: 14px;
       }
 
       /* Ẩn filters-wrap trên mobile (đã có trong panel) */
@@ -1061,6 +1070,16 @@
         width: 14px;
         height: 14px;
       }
+
+      .mobile-filter-toggle,
+      #uploadBtn {
+        font-size: 13px;
+        padding: 0 8px;
+      }
+
+      .brand h1{
+        font-size: 16px;
+      }
     }
 
     /* iPhone notch / safe area */
@@ -1109,7 +1128,7 @@
                 <path d="M7 9l5-5 5 5"></path>
                 <path d="M5 20h14"></path>
               </svg>
-              <span class="upload-text">Đóng góp tâm ngắm</span>
+              <span class="upload-text">Đóng góp</span>
             </button>
           </div>
         </div>
@@ -1188,11 +1207,6 @@
             <option value="name-desc">Tên Z → A</option>
             <option value="folder">Theo danh mục</option>
           </select>
-        </div>
-
-        <div class="filter-group">
-          <div class="filter-title">Danh mục</div>
-          <div class="filters" id="mobileFolderChips"></div>
         </div>
 
         <div class="filter-group">
@@ -1856,7 +1870,6 @@
     const mobileApplyBtn = document.getElementById("mobileApplyBtn");
     const mobileFolderSelect = document.getElementById("mobileFolderSelect");
     const mobileSortSelect = document.getElementById("mobileSortSelect");
-    const mobileFolderChips = document.getElementById("mobileFolderChips");
     const mobileColorChips = document.getElementById("mobileColorChips");
     const mobileShapeChips = document.getElementById("mobileShapeChips");
 
@@ -1866,28 +1879,6 @@
       mobileFolderSelect.value = activeFolder;
 
       mobileSortSelect.value = sortSelect.value;
-
-      // Folder chips
-      mobileFolderChips.innerHTML = "";
-      const folders = uniqueFolders(allItems);
-
-      mobileFolderChips.appendChild(createChip("Tất cả", "all", activeFolder, (value) => {
-        activeFolder = value;
-        folderSelect.value = value;
-        mobileFolderSelect.value = value;
-        renderAll();
-        renderMobileFilters();
-      }));
-
-      folders.forEach(folder => {
-        mobileFolderChips.appendChild(createChip(folder, folder, activeFolder, (value) => {
-          activeFolder = value;
-          folderSelect.value = value;
-          mobileFolderSelect.value = value;
-          renderAll();
-          renderMobileFilters();
-        }));
-      });
 
       // Color chips
       mobileColorChips.innerHTML = "";
