@@ -966,7 +966,7 @@
     function renderFolderFilters(items) {
       const folders = uniqueFolders(items);
 
-      folderSelect.innerHTML = '<option value="all">Tất cả thư mục</option>';
+      folderSelect.innerHTML = '<option value="all">Danh mục</option>';
       folders.forEach(folder => {
         const opt = document.createElement("option");
         opt.value = folder;
