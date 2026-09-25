@@ -392,29 +392,29 @@
     }
 
     .preview{
-  position:fixed;
-  left:0;
-  top:0;
-  width:280px;
-  z-index:200;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:20px;
-  background:rgba(7,17,30,.92);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  box-shadow:0 24px 60px rgba(0,0,0,.38);
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(8px) scale(.98);
-  pointer-events:none;
-  transition:opacity .16s ease, transform .16s ease;
-  will-change:left, top, opacity, transform;
-}
+      position:fixed;
+      left:0;
+      top:0;
+      width:280px;
+      z-index:200;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:20px;
+      background:rgba(7,17,30,.92);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:0 24px 60px rgba(0,0,0,.38);
+      overflow:hidden;
+      opacity:0;
+      transform:translateY(8px) scale(.98);
+      pointer-events:none;
+      transition:opacity .16s ease, transform .16s ease;
+      will-change:left, top, opacity, transform;
+    }
 
-.preview.show{
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
+    .preview.show{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
 
     .preview-head{
       display:flex;
@@ -479,30 +479,12 @@
       border:1px solid rgba(255,255,255,.06);
     }
 
-    @media (max-width:1100px){
-      .preview{display:none}
-    }
-
-    @media (max-width:980px){
-      .toolbar{grid-template-columns:1fr 1fr}
-    }
-
-    @media (max-width:640px){
-      .shell{width:min(100% - 16px,1440px)}
-      .topbar{top:8px}
-      .topbar-main{padding:14px}
-      .filters-wrap{padding:0 14px 14px}
-      .toolbar{grid-template-columns:1fr}
-      .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-      .name{font-size:16px}
-    }
-
     .logo-img{
-  width:88px;
-  height:88px;
-  object-fit:contain;
-  filter:drop-shadow(0 0 8px rgba(90,169,255,.4));
-}
+      width:88px;
+      height:88px;
+      object-fit:contain;
+      filter:drop-shadow(0 0 8px rgba(90,169,255,.4));
+    }
 
     .toolbar-actions{
       display:flex;
@@ -708,6 +690,214 @@
       line-height:1.6;
     }
 
+    /* ===== MOBILE FILTER DRAWER ===== */
+    .mobile-filter-toggle {
+      display: none;
+    }
+
+    .mobile-filter-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(3,8,18,.66);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 20px;
+      align-items: flex-end;
+    }
+
+    .mobile-filter-drawer.show {
+      display: flex;
+    }
+
+    .mobile-filter-content {
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: linear-gradient(180deg, rgba(18,32,58,.98), rgba(10,20,38,.98));
+      border: 1px solid var(--border-strong);
+      border-radius: 22px 22px 0 0;
+      padding: 20px;
+      animation: slideUp 0.25s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .mobile-filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .mobile-filter-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .mobile-filter-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(17,30,50,.95);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .mobile-filter-content .filter-group {
+      margin-top: 16px;
+    }
+
+    .mobile-filter-content .filter-group:first-of-type {
+      margin-top: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px){
+      .preview{display:none}
+    }
+
+    @media (max-width: 980px){
+      .toolbar{grid-template-columns:1fr 1fr}
+    }
+
+    @media (max-width: 768px){
+      .shell{width:min(100% - 16px,1440px); padding: 8px 0 36px;}
+      .topbar{top:8px; border-radius: 18px;}
+      .topbar-main{
+        padding: 14px;
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand{
+        min-width: auto;
+        gap: 10px;
+      }
+
+      .logo-img{
+        width: 48px;
+        height: 48px;
+      }
+
+      .brand h1{
+        font-size: 18px;
+      }
+
+      .brand p{
+        display: none; /* Ẩn mô tả dài trên mobile */
+      }
+
+      /* Ẩn các filter mặc định trên mobile */
+      .filters-wrap {
+        display: none;
+      }
+
+      /* Toolbar trên mobile */
+      .toolbar{
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        min-width: auto;
+      }
+
+      .toolbar .field {
+        grid-column: 1 / -1; /* Ô tìm kiếm full width */
+      }
+
+      .toolbar .select {
+        display: none; /* Ẩn select trên mobile, dùng drawer */
+      }
+
+      .toolbar-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+
+      /* Hiện nút bộ lọc trên mobile */
+      .mobile-filter-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .mobile-filter-toggle svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .grid{
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+      }
+
+      .name{
+        font-size: 15px;
+        margin: 6px 0;
+      }
+
+      .sub {
+        font-size: 11px;
+      }
+
+      .thumb-wrap {
+        padding: 12px 12px 6px;
+      }
+
+      .meta {
+        padding: 0 10px 12px;
+      }
+
+      .stats {
+        margin: 14px 4px 10px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .card-top {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+      }
+
+      .tag-mini {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+
+      .download-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+      }
+
+      .download-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .name {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -736,13 +926,19 @@
           </select>
           <div class="toolbar-actions">
             <button id="resetBtn" class="btn primary">Đặt lại</button>
+            <button id="mobileFilterBtn" class="btn mobile-filter-toggle" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 13 10 21 14 18 14 13 22 3"></polygon>
+              </svg>
+              Bộ lọc
+            </button>
             <button id="uploadBtn" class="btn upload">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 16V5"></path>
                 <path d="M7 9l5-5 5 5"></path>
                 <path d="M5 20h14"></path>
               </svg>
-              Tải lên tâm ngắm
+              Tải lên
             </button>
           </div>
         </div>
@@ -830,6 +1026,17 @@
           Chỉ chấp nhận file ảnh <b>.png</b>, dung lượng tối đa <b>2MB</b>. Sau khi bạn gửi, tâm ngắm sẽ được admin duyệt trước khi hiển thị trên trang.
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Mobile Filter Drawer -->
+  <div class="mobile-filter-drawer" id="mobileFilterDrawer">
+    <div class="mobile-filter-content">
+      <div class="mobile-filter-header">
+        <h3>Bộ lọc</h3>
+        <button class="mobile-filter-close" id="mobileFilterClose" type="button">×</button>
+      </div>
+      <div id="mobileFilterContent"></div>
     </div>
   </div>
 
@@ -1042,44 +1249,44 @@
     }
 
     function showPreview(item, event) {
-  previewTitle.textContent = item.name;
-  previewSub.textContent = `${item.folder} • ${item.file}`;
-  previewImg.src = item.path;
-  previewImg.alt = item.name;
+      previewTitle.textContent = item.name;
+      previewSub.textContent = `${item.folder} • ${item.file}`;
+      previewImg.src = item.path;
+      previewImg.alt = item.name;
 
-  const colorMeta = getColorMeta(item.color);
-  const shapeMeta = getShapeMeta(item.shape);
+      const colorMeta = getColorMeta(item.color);
+      const shapeMeta = getShapeMeta(item.shape);
 
-  previewTags.innerHTML = `
-    <div class="preview-tag">${colorMeta.label}</div>
-    <div class="preview-tag">${shapeMeta.label}</div>
-    <div class="preview-tag">${item.folder}</div>
-  `;
+      previewTags.innerHTML = `
+        <div class="preview-tag">${colorMeta.label}</div>
+        <div class="preview-tag">${shapeMeta.label}</div>
+        <div class="preview-tag">${item.folder}</div>
+      `;
 
-  const card = event.currentTarget;
-  const rect = card.getBoundingClientRect();
+      const card = event.currentTarget;
+      const rect = card.getBoundingClientRect();
 
-  const previewWidth = 280;
-  const gap = 16;
+      const previewWidth = 280;
+      const gap = 16;
 
-  let left = rect.right + gap;
-  let top = rect.top + (rect.height / 2) - 160;
+      let left = rect.right + gap;
+      let top = rect.top + (rect.height / 2) - 160;
 
-  if (left + previewWidth > window.innerWidth - 12) {
-    left = rect.left - previewWidth - gap;
-  }
+      if (left + previewWidth > window.innerWidth - 12) {
+        left = rect.left - previewWidth - gap;
+      }
 
-  if (left < 12) left = 12;
+      if (left < 12) left = 12;
 
-  const maxTop = window.innerHeight - 340;
-  if (top < 12) top = 12;
-  if (top > maxTop) top = Math.max(12, maxTop);
+      const maxTop = window.innerHeight - 340;
+      if (top < 12) top = 12;
+      if (top > maxTop) top = Math.max(12, maxTop);
 
-  previewBox.style.left = `${left}px`;
-  previewBox.style.top = `${top}px`;
+      previewBox.style.left = `${left}px`;
+      previewBox.style.top = `${top}px`;
 
-  previewBox.classList.add("show");
-}
+      previewBox.classList.add("show");
+    }
 
     function hidePreview() {
       previewBox.classList.remove("show");
@@ -1226,24 +1433,24 @@
     }
 
     async function init() {
-  try {
-    const items = await loadAllFolders();
-    allItems = items;
+      try {
+        const items = await loadAllFolders();
+        allItems = items;
 
-    renderFolderFilters(allItems);
-    renderColorFilters();
-    renderShapeFilters();
-    renderAll();
+        renderFolderFilters(allItems);
+        renderColorFilters();
+        renderShapeFilters();
+        renderAll();
 
-    loadingBox.style.display = "none";
-  } catch (error) {
-    console.error(error);
-    loadingBox.style.display = "none";
-    resultText.textContent = "Không tải được dữ liệu.";
-    emptyState.textContent = error.message;
-    emptyState.classList.add("show");
-  }
-}
+        loadingBox.style.display = "none";
+      } catch (error) {
+        console.error(error);
+        loadingBox.style.display = "none";
+        resultText.textContent = "Không tải được dữ liệu.";
+        emptyState.textContent = error.message;
+        emptyState.classList.add("show");
+      }
+    }
 
     searchInput.addEventListener("input", renderAll);
 
@@ -1433,6 +1640,134 @@
     });
 
     uploadSubmit.addEventListener("click", submitUpload);
+
+    // ===== MOBILE FILTER DRAWER =====
+    const mobileFilterBtn = document.getElementById("mobileFilterBtn");
+    const mobileFilterDrawer = document.getElementById("mobileFilterDrawer");
+    const mobileFilterClose = document.getElementById("mobileFilterClose");
+    const mobileFilterContent = document.getElementById("mobileFilterContent");
+
+    function renderMobileFilters() {
+      if (!mobileFilterContent) return;
+      mobileFilterContent.innerHTML = "";
+
+      // Folder filter
+      const folderGroup = document.createElement("div");
+      folderGroup.className = "filter-group";
+      folderGroup.innerHTML = '<div class="filter-title">Thư mục</div>';
+      const folderChipsContainer = document.createElement("div");
+      folderChipsContainer.className = "filters";
+      folderChipsContainer.id = "mobileFolderChips";
+      folderGroup.appendChild(folderChipsContainer);
+      mobileFilterContent.appendChild(folderGroup);
+
+      // Color filter
+      const colorGroup = document.createElement("div");
+      colorGroup.className = "filter-group";
+      colorGroup.innerHTML = '<div class="filter-title">Màu sắc</div>';
+      const colorChipsContainer = document.createElement("div");
+      colorChipsContainer.className = "filters";
+      colorChipsContainer.id = "mobileColorChips";
+      colorGroup.appendChild(colorChipsContainer);
+      mobileFilterContent.appendChild(colorGroup);
+
+      // Shape filter
+      const shapeGroup = document.createElement("div");
+      shapeGroup.className = "filter-group";
+      shapeGroup.innerHTML = '<div class="filter-title">Kiểu dáng</div>';
+      const shapeChipsContainer = document.createElement("div");
+      shapeChipsContainer.className = "filters";
+      shapeChipsContainer.id = "mobileShapeChips";
+      shapeGroup.appendChild(shapeChipsContainer);
+      mobileFilterContent.appendChild(shapeGroup);
+
+      // Render chips vào các container này
+      renderFolderFiltersMobile();
+      renderColorFiltersMobile();
+      renderShapeFiltersMobile();
+    }
+
+    function renderFolderFiltersMobile() {
+      const container = document.getElementById("mobileFolderChips");
+      if (!container) return;
+      container.innerHTML = "";
+      const folders = uniqueFolders(allItems);
+
+      container.appendChild(createChip("Tất cả", "all", activeFolder, (value) => {
+        activeFolder = value;
+        folderSelect.value = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      folders.forEach(folder => {
+        container.appendChild(createChip(folder, folder, activeFolder, (value) => {
+          activeFolder = value;
+          folderSelect.value = value;
+          renderAll();
+          renderMobileFilters();
+        }));
+      });
+    }
+
+    function renderColorFiltersMobile() {
+      const container = document.getElementById("mobileColorChips");
+      if (!container) return;
+      container.innerHTML = "";
+      container.appendChild(createChip("Tất cả", "all", activeColor, (value) => {
+        activeColor = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      COLOR_RULES.forEach(rule => {
+        container.appendChild(createChip(rule.label, rule.key, activeColor, (value) => {
+          activeColor = value;
+          renderAll();
+          renderMobileFilters();
+        }, rule.swatch));
+      });
+    }
+
+    function renderShapeFiltersMobile() {
+      const container = document.getElementById("mobileShapeChips");
+      if (!container) return;
+      container.innerHTML = "";
+      container.appendChild(createChip("Tất cả", "all", activeShape, (value) => {
+        activeShape = value;
+        renderAll();
+        renderMobileFilters();
+      }));
+
+      SHAPE_RULES.forEach(rule => {
+        container.appendChild(createChip(rule.label, rule.key, activeShape, (value) => {
+          activeShape = value;
+          renderAll();
+          renderMobileFilters();
+        }));
+      });
+    }
+
+    mobileFilterBtn.addEventListener("click", () => {
+      renderMobileFilters();
+      mobileFilterDrawer.classList.add("show");
+    });
+
+    mobileFilterClose.addEventListener("click", () => {
+      mobileFilterDrawer.classList.remove("show");
+    });
+
+    mobileFilterDrawer.addEventListener("click", (e) => {
+      if (e.target === mobileFilterDrawer) {
+        mobileFilterDrawer.classList.remove("show");
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        mobileFilterDrawer.classList.remove("show");
+      }
+    });
 
     init();
   </script>
